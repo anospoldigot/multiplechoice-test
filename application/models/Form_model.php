@@ -13,7 +13,15 @@ class Form_model extends CI_Model
      */
     public function save(array $object)
     {
+        // $this->dbforge->add_field('isi');
         $this->db->insert($this->table, $object);
+    }
+
+    public function insert_id(array $object)
+    {
+        $this->db->insert($this->table, $object);
+
+        return $this->db->insert_id();
     }
 
     /**
@@ -44,6 +52,20 @@ class Form_model extends CI_Model
             $this->db->join($data[0], $data[1], 'left');
         }
         $this->db->where($where);
+        return $this->db->get();
+    }
+
+    public function get_test ($select, $join, $where, $groupBy) 
+    {
+        $this->db->select($select);
+        $this->db->select_max('isi_form.nilai');
+        $this->db->from($this->table);
+        foreach ($join as $data) {
+            $this->db->join($data[0], $data[1], 'left');
+        }
+        $this->db->where($where);
+        $this->db->group_by($groupBy);
+
         return $this->db->get();
     }
 

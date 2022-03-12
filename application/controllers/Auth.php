@@ -66,6 +66,7 @@ class Auth extends CI_Controller
                     $this->session->set_userdata('id', $cek_login->id_user);
                     $this->session->set_userdata('email', $cek_login->email_user);
                     $this->session->set_userdata('name', $cek_login->nama_user);
+                    $this->session->set_userdata('id_perusahaan', $cek_login->id_perusahaan);
 
                     redirect('dashboard/list_form');
                 } else {

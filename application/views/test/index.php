@@ -37,20 +37,11 @@
                     <div class="row">
                         <!-- left column -->
                         <div class="col-12">
-                            <?php if ($this->session->flashdata('msg') != null) { ?>
-                                <div class="alert alert-success" role="alert">
-                                    <?php echo $this->session->flashdata('msg'); ?>
-                                </div>
-                            <?php } ?>
-                            <?php if ($this->session->flashdata('error') != null) { ?>
-                                <div class="alert alert-warning" role="alert">
-                                    <?php echo $this->session->flashdata('error'); ?>
-                                </div>
-                            <?php } ?>
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">List Form</h3>
                                 </div>
+
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="example1" class="table table-bordered table-striped">
@@ -58,17 +49,32 @@
                                             <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Nama Form</th>
+                                                <th>Nilai Tertinggi</th>
                                                 <th>Action</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $i = 1 ?>
-                                            <?php foreach ($form as $data) : ?>
+                                            <?php foreach ($form as $key => $data) : ?>
                                                 <tr class="text-center">
-                                                    <td><?= $i++ ?></td>
+                                                    <td><?= $key+1 ?></td>
                                                     <td><?= $data->nama_form ?></td>
+                                                    <td><?= $data->nilai ?? '-' ?></td>
                                                     <td>
-                                                        <a href="" class="btn btn-sm btn-success">Lihat Test</a>
+                                                        <?php if($data->nilai == null): ?>
+                                                            <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-danger btn-sm">Kerjakan</a>          
+                                                            <?php elseif($data->nilai >= 70): ?>   
+                                                                <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-success btn-sm disabled">Lulus</a>
+                                                        <?php else: ?>
+                                                            <a href="<?= site_url('test/show/' . $data->id_form . '?' . 'repeat=true') ?>" class="btn btn-danger btn-sm">Kerjakan Lagi</a>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if($data->nilai == null || $data->nilai < 70): ?>
+                                                            <span class="text-warning">Belum Lulus</span>
+                                                            <?php else: ?>
+                                                                <span class="text-success">Lulus</span>
+                                                        <?php endif; ?>
                                                     </td>
                                                 </tr>
                                             <?php endforeach ?>

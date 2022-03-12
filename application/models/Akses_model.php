@@ -16,6 +16,10 @@ class Akses_model extends CI_Model
         $this->db->insert($this->table, $object);
     }
 
+    public function insert_batch (array $object) {
+        
+        $this->db->insert_batch($this->table, $object);
+    }
     /**
      * mengambil data tabel dengan kondisi where
      *

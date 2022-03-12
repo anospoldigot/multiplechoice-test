@@ -237,4 +237,71 @@ class Form extends CI_Controller
 
         redirect('form/' . $nama_form . '/' . 'show' . '/' . $data->id_isi);
     }
+
+    public function create () {
+        $data['perusahaan'] = $this->perusahaan->get_all()->result();
+        $this->load->view('admin/form/create', $data);
+    }
+
+    public function store () 
+    {
+        if($this->input->post('type') > 0){
+            $form['is_pretest'] = 1;
+
+            $where = [
+                'akses.id_perusahaan' => $this->input->post('id_perusahaan'),
+                'form.is_pretest' => 1
+            ];
+
+            $join = [
+                ['akses', 'akses.id_form = form.id_form']
+            ];
+
+            $count = $this->form->get_join_where('*', $join, $where)->row();
+
+            if(count($count) > 0){
+                $this->form->delete(['id_form' => $count->id_form]);
+            }
+        }
+
+        $this->load->model('Akses_model', 'akses');
+        
+        $form ['nama_form'] = $this->input->post('nama_form');
+        $form['created_at'] = date('Y-m-d h:i:s');
+
+        $form['isi']  = [];
+        foreach($this->input->post('a') as $key => $value){
+            $push = [
+                    'pertanyaan' => $this->input->post('pertanyaan' . ($key+1)),
+                    'pilihan' => [
+                        'a' => $this->input->post('a')[$key],
+                        'b' => $this->input->post('b')[$key],
+                        'c' => $this->input->post('c')[$key],
+                        'd' => $this->input->post('d')[$key]
+                    ],
+                    'jawaban' => $this->input->post('jawaban' . ($key+1))
+                ];
+
+            array_push($form['isi'], $push);
+                
+        }
+        $form['isi']  = json_encode($form['isi']);
+        $id_form = $this->form->insert_id($form);
+
+        $user = $this->user->get_where(['id_perusahaan' => $this->input->post('id_perusahaan')])->result();
+        $users = [];
+        foreach ($user as $value){
+            $users[] = [
+                'id_perusahaan' => $this->input->post('id_perusahaan'),
+                'id_form' => $id_form,
+                'akses' => 0
+            ];
+        }
+        
+        $this->akses->insert_batch($users);        
+
+        redirect('admin/form');
+    }
+
+
 }

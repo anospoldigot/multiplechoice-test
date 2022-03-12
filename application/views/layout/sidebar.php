@@ -35,10 +35,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('admin/form') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'form') : ?> active <?php endif ?>">
+                        <a href="<?= site_url('admin/form') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'form' && $this->uri->segment(3) == '') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
-                                List Form
+                                List Test
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= site_url('admin/form/create') ?>" class="nav-link <?php if ($this->uri->segment(3) == 'create' && $this->uri->segment(2) == 'form') : ?> active <?php endif ?>">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Create Test
                             </p>
                         </a>
                     </li>
@@ -62,6 +70,22 @@
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 List Form
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= site_url('/test/pretest') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'pre') : ?> active <?php endif ?>">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Pre Test
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= site_url('dashboard/test/pre-test') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'post') : ?> active <?php endif ?>">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Post Test
                             </p>
                         </a>
                     </li>

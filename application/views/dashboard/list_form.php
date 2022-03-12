@@ -34,6 +34,7 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    <?php var_dump($form); ?>
                     <div class="row">
                         <!-- left column -->
                         <div class="col-12">
