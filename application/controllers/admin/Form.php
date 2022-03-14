@@ -294,13 +294,35 @@ class Form extends CI_Controller
             $users[] = [
                 'id_perusahaan' => $this->input->post('id_perusahaan'),
                 'id_form' => $id_form,
-                'akses' => 0
+                'id_user' => $value->id_user,
+                'akses' => 0,
+                'status' => 0
             ];
         }
         
         $this->akses->insert_batch($users);        
 
         redirect('admin/form');
+    }
+
+    public function change_akses ($id_form)
+    {   
+        $this->load->model('Akses_model', 'akses');
+        $where = [
+            'id_form' => $id_form
+        ];
+
+        if($this->input->get('key') == 1){
+
+            $this->akses->update_where(['akses' => 0], $where);
+            $this->session->set_flashdata('success', 'Berhasil menutup akses');
+            
+        }else{
+            $this->akses->update_where(['akses' => 1], $where);
+            $this->session->set_flashdata('success', 'Berhasil membuka akses');
+        }
+
+            redirect($this->input->get('current_url'));
     }
 
 

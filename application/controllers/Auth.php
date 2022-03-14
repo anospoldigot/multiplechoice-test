@@ -68,7 +68,7 @@ class Auth extends CI_Controller
                     $this->session->set_userdata('name', $cek_login->nama_user);
                     $this->session->set_userdata('id_perusahaan', $cek_login->id_perusahaan);
 
-                    redirect('dashboard/list_form');
+                    redirect('test');
                 } else {
                     $this->session->set_flashdata('error', 'Email atau password yang Anda masukan salah.');
                     redirect('login');

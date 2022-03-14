@@ -71,9 +71,9 @@
                                                     <td><?= $i++ ?></td>
                                                     <td><strong><?= $data->nama_perusahaan ?></strong></td>
                                                     <td>
-                                                        <a style="" href="<?= site_url('admin/perusahaan/list_form/' . $data->id_perusahaan) ?>" class="btn btn-primary btn-sm">
-                                                            <i class="fas fa-table"></i><br>
-                                                            Form Akses
+                                                        <a style="" href="<?= site_url('admin/perusahaan/list_test/' . $data->id_perusahaan) ?>" class="btn btn-primary btn-sm">
+                                                            <i class="fas fa-clipboard-list"></i><br>
+                                                            Lihat test
                                                         </a>
                                                         <a style="" href="<?= site_url('admin/user/list/' . $data->id_perusahaan) ?>" class="btn btn-success btn-sm">
                                                             <i class="fas fa-users"></i><br>

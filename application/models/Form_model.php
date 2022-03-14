@@ -69,6 +69,25 @@ class Form_model extends CI_Model
         return $this->db->get();
     }
 
+    public function admin_get_test ($select, $join, $where, $groupBy) 
+    {
+        $this->db->select($select);
+        $this->db->from($this->table);
+        
+        foreach ($join as $data) {
+            $this->db->join($data[0], $data[1], 'left');
+        }
+        $this->db->where($where);
+        $this->db->group_by($groupBy);
+
+        return $this->db->get();
+    }
+
+    // public function get_submit ()
+    // {
+    //     $t
+    // }
+
     /**
      * mengambil data dengan join, kondisi where dan juga order
      *

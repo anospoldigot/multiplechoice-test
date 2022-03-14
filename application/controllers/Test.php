@@ -8,9 +8,31 @@ class Test extends CI_Controller {
         $this->load->model('User_model', 'user');
         $this->load->model('Form_model', 'form');
         $this->load->model('Isi_form_model', 'isi_form');
+        $this->load->model('Akses_model', 'akses');
+        if ($this->session->userdata('status') != 'user') {
+            echo '<script>alert("Silahkan Login Untuk Mengakses Halaman ini")</script>';
+            redirect('/login', 'refresh');
+        }
     }
 
     public function index (){
+        $where = [
+            'id_user' => $this->session->userdata('id'),
+            'form.is_pretest' => 1
+        ];
+
+        $join = [
+            ['form', 'form.id_form = isi_form.id_form']
+        ];
+
+        $check_test = $this->isi_form->get_join_where('*', $join ,$where)->result();
+        if(empty($check_test)){
+            echo '<script>
+                alert("Selesaikan pretest dahulu");
+                window.location.href="' . site_url('test/pretest') .'"
+            </script>';
+        }
+
         $where = ['id_user' => $this->session->userdata('id')];
 
         $id_perusahaan = $this->user->get_where($where)->row()->id_perusahaan;
@@ -18,16 +40,20 @@ class Test extends CI_Controller {
 
         $join = [
             ['akses', 'akses.id_form = form.id_form'],
-            ['isi_form', 'isi_form.id_form = form.id_form']
+            ['isi_form', 'isi_form.id_form = form.id_form'],
         ];
 
         $where = [
             'akses.id_perusahaan' => $id_perusahaan,
-            'is_pretest' => 0
+            'is_pretest' => 0,
+            'akses.id_user' => $this->session->userdata('id')
         ];
 
-        $select = 'form.id_form, isi_form.nilai, form.nama_form';
+        $select = 'form.id_form, isi_form.nilai, form.nama_form, akses.status, akses.akses';
         $data['form'] = $this->form->get_test($select, $join, $where, 'form.id_form')->result();
+
+
+
 
         $this->load->view('test/index', $data);
 
@@ -42,8 +68,6 @@ class Test extends CI_Controller {
 
     public function store ()
     {
-        // print_r($this->input->post('is_remed'));
-        // die();
         $isi_form['benar'] = 0;
         $isi_form['salah'] = 0;
 
@@ -71,11 +95,24 @@ class Test extends CI_Controller {
 
         $isi_form['nilai'] =  ($isi_form['benar'] / ($isi_form['benar']+$isi_form['salah'])) * 100;
 
+
+        $where = [
+            'id_form' => $this->input->post('id_form'),
+            'id_user' => $this->session->userdata('id')
+        ];
+
         if($this->input->post('is_remed') == 'true' && $isi_form['nilai'] >= 70){
 
             $isi_form['nilai'] = 70;
-
+            $isi_form['is_repeat'] = 1;
+            $this->akses->update_where(['status' => 2], $where);
+        }else if($this->input->post('is_remed') == '' && $isi_form['nilai'] >= 70){
+            $this->akses->update_where(['status' => 2], $where);
+        }else{
+            $this->akses->update_where(['status' => 1 ], $where);
         }
+
+
         $isi_form['isi'] =  json_encode($isi_form['isi']);
         
         $this->isi_form->save($isi_form);
@@ -83,7 +120,6 @@ class Test extends CI_Controller {
         $this->session->set_flashdata('success', 'Berhasil menginput form');
 
         redirect('/test');
-        
     }
 
     public function pretest ()

@@ -55,6 +55,60 @@ class Perusahaan extends CI_Controller
 
         $this->load->view('admin/perusahaan/list_form', $data);
     }
+    
+
+    public function list_test($id_perusahaan)
+    {
+
+        $join = [
+            ['akses', 'akses.id_form = form.id_form'],
+        ];
+
+        $where = [
+            'akses.id_perusahaan' => $id_perusahaan,
+        ];
+
+        $select = '*';
+        $data['list_test'] = $this->form->admin_get_test($select, $join, $where, 'form.id_form')->result();
+        $this->load->view('admin/perusahaan/list_test', $data);
+    }
+
+    public function test ($id_form)
+    {   
+        $data['test'] = $this->form->get_where(['id_form' => $id_form])->row();
+
+        $this->load->view('admin/perusahaan/show_test', $data);
+    }
+
+    public function list_submit ($id_form) 
+    {
+        // $join = [
+        //     ['isi_form', 'isi_form.id_user = user.id_user']
+        // ];
+
+        // $where = [
+        //     'isi_form.id_form' => $id_form
+        // ];
+
+
+
+        $data['users'] = $this->db
+            ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, isi_form.id_form')
+            ->select_max('nilai')
+            ->from('user')
+            ->join('akses', 'akses.id_user = user.id_user', 'left')
+            ->join('isi_form', 'isi_form.id_user = user.id_user', 'left')
+            ->where([
+                'user.id_perusahaan' => $this->input->get('key'),
+                'akses.id_form' => $id_form,
+            ])
+            ->group_by('user.id_user')
+            ->get()
+            ->result();
+
+        
+        $this->load->view('admin/perusahaan/user_submit', $data);
+    }
 
     /**
      * menyimpan data perusahaan

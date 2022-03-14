@@ -59,10 +59,9 @@
                                                                     <span class="font-weight-bold text-uppercase"><?= $k ?>. </span><?= $val ?>
                                                                 </label>
                                                             </div>
-                                                            <input type="hidden" name="answer_key<?=$key?>" value="<?=$value->jawaban?>">
-                                                            <input type="hidden" name="answer_val<?=$key?>" value="<?=$value->pilihan->{$k}?>">
                                                         <?php endforeach; ?>
-                                                        
+                                                        <input type="hidden" name="answer_key<?=$key?>" value="<?=$value->jawaban?>">
+                                                        <input type="hidden" name="answer_val<?=$key?>" value="<?=$value->pilihan->{$value->jawaban}?>">       
                                                     </div>
                                                 </div>
                                             </li>

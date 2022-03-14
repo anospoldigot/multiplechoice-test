@@ -61,16 +61,18 @@
                                                     <td><?= $data->nama_form ?></td>
                                                     <td><?= $data->nilai ?? '-' ?></td>
                                                     <td>
-                                                        <?php if($data->nilai == null): ?>
+                                                        <?php if($data->akses == 0) : ?>
+                                                            <a href="" class="disabled btn btn-warning">Tidak dapat akses</a>
+                                                        <?php elseif($data->status == 0): ?>
                                                             <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-danger btn-sm">Kerjakan</a>          
-                                                            <?php elseif($data->nilai >= 70): ?>   
-                                                                <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-success btn-sm disabled">Lulus</a>
+                                                        <?php elseif($data->status == 2): ?>         
+                                                            <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-success btn-sm disabled">Lulus</a>
                                                         <?php else: ?>
                                                             <a href="<?= site_url('test/show/' . $data->id_form . '?' . 'repeat=true') ?>" class="btn btn-danger btn-sm">Kerjakan Lagi</a>
                                                         <?php endif; ?>
                                                     </td>
                                                     <td>
-                                                        <?php if($data->nilai == null || $data->nilai < 70): ?>
+                                                        <?php if($data->status < 2): ?>
                                                             <span class="text-warning">Belum Lulus</span>
                                                             <?php else: ?>
                                                                 <span class="text-success">Lulus</span>
