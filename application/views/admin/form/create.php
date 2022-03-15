@@ -69,13 +69,13 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="type">Type</label>
                             <select name="type" id="type" class="form-control">
                                 <option value="0">Post Test</option>
                                 <option value="1">Pretest</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div id="soal-wrapper">
                             <div class="soal mb-5">
                                 <div class="form-group">
