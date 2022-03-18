@@ -60,6 +60,7 @@
                                                     <td><?= $value->nama_form ?></td>
                                                     <td><?= $value->is_pretest == 0 ? '<span class="badge badge-success">Post Test</span>' : '<span class="badge badge-danger">Pre Test</span>' ?></td>
                                                     <td>
+                                                        <div class="d-block d-xl-none"></div>
                                                         <a href="<?= site_url('admin/perusahaan/list_submit/' . $value->id_form  . '?key=' . $this->uri->segment(4)) ?>" class="btn btn-sm btn-success">
                                                         <i class="fas fa-file"></i><br>
                                                         Lihat submit user
@@ -68,9 +69,13 @@
                                                         <i class="fas fa-file"></i><br>
                                                         Lihat Test
                                                         </a>
-                                                        <a href="<?= site_url('admin/form/change_akses/'  . $value->id_form . '?key=' . $value->akses . '&current_url=' . current_url()) ?>" class="btn btn-sm btn-warning">
+                                                        <!-- <a href="<?= site_url('admin/form/change_akses/'  . $value->id_form . '?key=' . $value->akses . '&current_url=' . current_url()) ?>" class="btn btn-sm btn-warning">
                                                             <i class="fas fa-pen"></i><br>
-                                                            Ubah Akses
+                                                            <?= $value->akses > 0 ? 'Buka Akses' : 'Tutup Akses' ?>  
+                                                        </a> -->
+                                                        <a href="<?= site_url('admin/form/user_akses/'  . $value->id_form . '?key=' . $value->id_perusahaan) ?>" class="btn btn-sm btn-primary">
+                                                            <i class="fas fa-users-cog"></i><br>
+                                                            Akses Peserta
                                                         </a>
                                                         <!-- <a href="<?= site_url('admin/report/excel/'  . $value->id_form . '?key=' . $value->id_perusahaan . '&current=' . $this->uri->segment(4))  ?>" class="btn btn-sm btn-primary">
                                                             <i class="fas fa-file-alt"></i><br>

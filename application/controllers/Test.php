@@ -15,6 +15,12 @@ class Test extends CI_Controller {
         }
     }
 
+    public function dashboard ()
+    {
+        $this->load->view('test/dashboard');
+    }
+
+
     public function index (){
         $where = [
             'id_user' => $this->session->userdata('id'),
@@ -60,8 +66,30 @@ class Test extends CI_Controller {
     }
 
     public function show ($id_form) 
-    {
+    {   
+        $where = [
+            'id_form' => $id_form+1,
+            'id_user' => $this->session->userdata('id')
+        ];
+
+        $cek_data = $this->isi_form->get_where($where)->num_rows();
+
+        
         $data['soal'] = $this->form->get_where(['id_form' => $id_form])->row();
+
+        if($cek_data == 0 && $data['soal']->is_pretest == 0){
+            echo '<script>
+                alert("Kerjakan pretest dahulu");
+                window.location.href = "' . site_url('test/pretest') . '"
+            </script>';
+        }
+
+        $where = [
+            'id_form' => $id_form,
+            'id_user' => $this->session->userdata('id')
+        ];
+
+        $data['total_submit'] = $this->isi_form->get_where($where)->num_rows();
 
         $this->load->view('test/show', $data);
     }
@@ -114,9 +142,21 @@ class Test extends CI_Controller {
 
 
         $isi_form['isi'] =  json_encode($isi_form['isi']);
-        
+        $isi_form['submit_ke'] = $this->input->post('total_submit') + 1;
         $this->isi_form->save($isi_form);
-        
+
+
+        $cek_data = $this->isi_form->get_where($where)->num_rows();
+
+        if($cek_data == 2){
+
+            $update = [
+                'akses' => 0
+            ];
+
+            $this->akses->update_where($update,$where);
+        }
+
         $this->session->set_flashdata('success', 'Berhasil menginput form');
 
         redirect('/test');
@@ -125,36 +165,42 @@ class Test extends CI_Controller {
     public function pretest ()
     {
 
-        $where = [
-            'id_perusahaan' => $this->session->userdata('id_perusahaan'),
-            'is_pretest' => 1
-        ];
+        // $where = [
+        //     'id_user' => $this->session->userdata('id'),
+        //     'form.is_pretest' => 1
+        // ];
+
+        // $join = [
+        //     ['form', 'form.id_form = isi_form.id_form']
+        // ];
+
+        // $check_test = $this->isi_form->get_join_where('*', $join ,$where)->result();
+        // if(empty($check_test)){
+        //     echo '<script>
+        //         alert("Selesaikan pretest dahulu");
+        //         window.location.href="' . site_url('test/pretest') .'"
+        //     </script>';
+        // }
+
+        $where = ['id_user' => $this->session->userdata('id')];
+
+        $id_perusahaan = $this->user->get_where($where)->row()->id_perusahaan;
+
 
         $join = [
-            ['akses', 'akses.id_form = form.id_form']
+            ['akses', 'akses.id_form = form.id_form'],
+            ['isi_form', 'isi_form.id_form = form.id_form'],
         ];
 
-        $tests = $this->form->get_join_where('*', $join, $where)->row();
-        // print_r($tests);
-        if(empty($tests)){
-            $data['message'] = 'Pretest belum ada';
-        }else{
-            $where = [
-                'id_user' => $this->session->userdata('id'),
-                'id_form' => $tests->id_form
-            ];
-    
-            $count = $this->isi_form->get_where($where)->num_rows();
-    
-            if($count > 0){
-                echo "<script>
-                        alert('Anda sudah menyelesaikan pretest');
-                        window.location.href='" . site_url('/test') . "';
-                    </script>";
-            }else{
-                $data['test'] = $tests;
-            }
-        }
+        $where = [
+            'akses.id_perusahaan' => $id_perusahaan,
+            'is_pretest' => 1,
+            'akses.id_user' => $this->session->userdata('id')
+        ];
+
+        $select = 'form.id_form, isi_form.nilai, form.nama_form, akses.status, akses.akses';
+        $data['form'] = $this->form->get_test($select, $join, $where, 'form.id_form')->result();
+
         $this->load->view('test/pretest', $data);
 
     }

@@ -50,9 +50,9 @@
                                                 <th>No</th>
                                                 <th>Nama Peserta</th>
                                                 <th>Email</th>
-                                                <th>Nilai Tertinggi</th>
                                                 <th>Total Submit</th>
                                                 <th>Status</th>
+                                                <th>Action</th>
                                                 <!-- <th>Action</th> -->
                                             </tr>
                                         </thead>
@@ -62,7 +62,6 @@
                                                     <td><?= $key+1 ?></td>
                                                     <td><?= $value->nama_user ?></td>
                                                     <td><?= $value->email_user ?></td>
-                                                    <td><?= $value->nilai ?></td>
                                                     <td><?= $value->total_submit  ?></td>
                                                     <td>
                                                     <?php if($value->status == 0): ?>
@@ -72,6 +71,14 @@
                                                     <?php elseif($value->status == 2): ?>
                                                         <span class="badge badge-success">Lulus</span>
                                                     <?php endif; ?>    
+                                                    </td>
+                                                    <td class="d-flex">
+                                                        <div>
+                                                        <a href="<?= site_url('admin/perusahaan/detail_submit_user/' . $value->id_form . '?key=' . $value->id_user) ?>" class="btn btn-sm btn-info">
+                                                            <i class="fas fa-file"></i><br>
+                                                            Detail Submit User
+                                                        </a>
+                                                        </div>
                                                     </td>
                                                     <!-- <td>
                                                         <a href="" class="btn btn-sm btn-primary">Generate Report</a>
@@ -122,7 +129,8 @@
                     'excelHtml5',
                     // 'csvHtml5',
                     // 'pdfHtml5'
-                ]
+                ],
+                responsive: true
             } );
         } );
     </script>

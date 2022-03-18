@@ -70,6 +70,7 @@ class Perusahaan extends CI_Controller
 
         $select = '*';
         $data['list_test'] = $this->form->admin_get_test($select, $join, $where, 'form.id_form')->result();
+        
         $this->load->view('admin/perusahaan/list_test', $data);
     }
 
@@ -93,8 +94,8 @@ class Perusahaan extends CI_Controller
 
 
         $data['users'] = $this->db
-            ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, isi_form.id_form')
-            ->select_max('nilai')
+            ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, akses.id_form, submit_ke, user.id_user')
+            // ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, isi_form.id_form, submit_ke')
             ->from('user')
             ->join('akses', 'akses.id_user = user.id_user', 'left')
             ->join('isi_form', 'isi_form.id_user = user.id_user', 'left')
@@ -106,9 +107,11 @@ class Perusahaan extends CI_Controller
             ->get()
             ->result();
 
-        
         $this->load->view('admin/perusahaan/user_submit', $data);
     }
+
+
+   
 
     /**
      * menyimpan data perusahaan
@@ -300,5 +303,23 @@ class Perusahaan extends CI_Controller
         $this->user->delete(['id_perusahaan' => $id_perusahaan]);
         $this->session->set_flashdata('msg', 'Data Perusahaan Berhasil Di Hapus');
         redirect('admin/perusahaan');
+    }
+
+    public function detail_submit_user($id_form)
+    {   
+        $this->load->model('isi_form_model', 'isi_form');
+
+        $where = [ 
+            'user.id_user' => $this->input->get('key'),
+            'id_form' => $id_form
+        ];
+
+        $join = [
+            ['user', 'user.id_user = isi_form.id_user']
+        ];
+
+        $data['history'] = $this->isi_form->get_join_where('*', $join, $where)->result();
+
+        $this->load->view('admin/perusahaan/detail_submit_user', $data);
     }
 }

@@ -34,43 +34,47 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    <div class="mb-3">
+                        <a href="<?= site_url('admin/form/buka_akses/'  . $this->uri->segment(4) . '?key=' . $this->input->get('key') . '&current_url=' . current_url() . '?key=' . $this->input->get('key')) ?>" class="btn btn-danger">Buka Semua Akses</a>
+                        <a href="<?= site_url('admin/form/tutup_akses/'  . $this->uri->segment(4) . '?key=' . $this->input->get('key') . '&current_url=' . current_url() . '?key=' . $this->input->get('key')) ?>" class="btn btn-success">Tutup Semua Akses</a>
+                    </div>
                     <div class="row">
                         <!-- left column -->
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">List Form</h3>
+                                    <div><h3 class="card-title">List User</h3></div>
                                 </div>
-
-                                <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="example1" class="table table-bordered table-striped  no-footer dtr-inline">
                                         <thead>
-                                            <tr class="text-center">
+                                            <tr>
                                                 <th>No</th>
-                                                <th>Nama Form</th>
-                                                <th>Action</th>
+                                                <th>Nama Peserta</th>
+                                                <th>Status Akses</th>
+                                                <th>Ubah Akses</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($form as $key => $data) : ?>
-                                                <tr class="text-center">
+                                            
+                                            <?php foreach($users as $key => $user) : ?>
+                                                <tr>
                                                     <td><?= $key+1 ?></td>
-                                                    <td><?= $data->nama_form ?></td>
+                                                    <td><?= $user->nama_user ?></td>
+                                                    <td><?= $user->akses > 0 ? '<span class="badge badge-success">Terbuka</span>' : '<span class="badge badge-danger">Tertutup</span>' ?></td>
                                                     <td>
-                                                        <?php if($data->status == 2 || $data->status == 1) : ?>
-                                                            <a href="" class="disabled btn btn-warning">Sudah Mengerjakan Pretest</a>
-                                                        <?php elseif($data->akses == 0): ?>
-                                                            <a href="" class="disabled btn btn-warning">Tidak dapat akses</a>
-                                                        <?php elseif($data->status == 0): ?>         
-                                                            <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-success btn-sm">Kerjakan</a>
-                                                        <?php endif; ?>
+                                                        <a href="<?= site_url('admin/form/change_user_akses/'  . $user->id_akses . '?key=' . $user->akses . '&current_url=' . current_url() . '?key=' . $this->input->get('key')) ?>" class="btn btn-sm btn-warning">
+                                                            <i class="fas fa-edit"></i><br>
+                                                            <?= $user->akses > 0 ? 'Tutup Akses' : 'Buka Akses' ?>
+                                                        </a>
                                                     </td>
                                                 </tr>
-                                            <?php endforeach ?>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
+                                <!-- /.card-header -->
+
                                 <!-- /.card-body -->
                             </div>
                             <!-- /.card -->

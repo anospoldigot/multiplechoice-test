@@ -34,7 +34,6 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <p id="demo"></p>
 
                     <div class="row">
                         <!-- left column -->
@@ -43,6 +42,7 @@
                                 <div class="card-header">Selamat mengerjakan</div>
                                 <div class="card-body">
                                     <form action="<?= site_url('test/store') ?>" method="post">
+                                        <input type="hidden" name="total_submit" value="<?= $total_submit ?>">
                                         <input type="hidden" name="count" value="<?= count(json_decode($soal->isi)) ?>">
                                         <input type="hidden" name="id_form" value="<?=$soal->id_form?>">
                                         <input type="hidden" name="is_remed" value="<?= $this->input->get('repeat') ?>">
@@ -101,35 +101,6 @@
     <?php $this->load->view('layout/script') ?>
 
     <!-- Display the countdown timer in an element -->
-
-    <script>
-        // Set the date we're counting down to
-        var countDownDate = new Date("15:00").getTime();
-
-        // Update the count down every 1 second
-        var x = setInterval(function() {
-
-        // Get today's date and time
-        var now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result in the element with id="demo"
-        document.getElementById("demo").innerHTML =
-        minutes + "m " + seconds + "s ";
-
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("demo").innerHTML = "EXPIRED";
-        }
-        }, 1000);
-    </script>
 
 </body>
 

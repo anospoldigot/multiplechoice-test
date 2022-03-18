@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <?php $this->load->view('layout/head') ?>
+    <?php $data['page_title'] = 'List Test'; $this->load->view('layout/head', $data) ?>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -39,7 +39,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">List Form</h3>
+                                    <h3 class="card-title">List Test</h3>
                                 </div>
 
                                 <!-- /.card-header -->
@@ -48,26 +48,26 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th>No</th>
-                                                <th>Nama Form</th>
+                                                <th>Nama Test</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($form as $key => $data) : ?>
-                                                <tr class="text-center">
+                                            <?php foreach($tests as $key => $test) : ?>
+                                                <tr>
                                                     <td><?= $key+1 ?></td>
-                                                    <td><?= $data->nama_form ?></td>
+                                                    <td><?= $test->nama_form ?></td>
                                                     <td>
-                                                        <?php if($data->status == 2 || $data->status == 1) : ?>
-                                                            <a href="" class="disabled btn btn-warning">Sudah Mengerjakan Pretest</a>
-                                                        <?php elseif($data->akses == 0): ?>
-                                                            <a href="" class="disabled btn btn-warning">Tidak dapat akses</a>
-                                                        <?php elseif($data->status == 0): ?>         
-                                                            <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-success btn-sm">Kerjakan</a>
-                                                        <?php endif; ?>
+                                                        <?= $test->is_pretest > 0 ? '<span class="badge badge-danger">Pre test</span>' : '<span class="badge badge-success">Post Test</span>' ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="" class="btn btn-danger btn-sm" title="Hapus Test">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
-                                            <?php endforeach ?>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -97,6 +97,11 @@
     <!-- ./wrapper -->
 
     <?php $this->load->view('layout/script') ?>
+    <?php if($this->session->flashdata('success')) : ?>
+        <script>
+            Swal.fire('Berhasil', '<?= $this->session->flashdata('success') ?>', 'success');
+        </script>
+    <?php endif; ?>
 
 
 </body>

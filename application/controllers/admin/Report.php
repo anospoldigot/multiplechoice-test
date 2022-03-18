@@ -50,9 +50,11 @@ class Report extends CI_Controller {
 
         $this->session->set_flashdata('report' . $id_form, 'assets/report/hello-world.xlsx');
         redirect('admin/perusahaan/list_test/' . $this->input->get('current'));
+    }
+
+    public function excel_peruser ()
+    {
         
-
-
     }
 }
 

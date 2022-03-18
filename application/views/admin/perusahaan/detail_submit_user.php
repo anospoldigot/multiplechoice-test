@@ -2,7 +2,10 @@
 <html lang="en">
 
 <head>
-    <?php $this->load->view('layout/head') ?>
+<?php 
+    $data['page_title'] = !empty($history) ? 'History ' . $history[0]->nama_user : 'History User' ;
+?>
+<?php  $this->load->view('layout/head', $data) ?>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -39,35 +42,33 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">List Form</h3>
+                                    <h3 class="card-title">List Test</h3>
                                 </div>
-
+                                
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="datatable-with-export" class="table table-bordered table-striped">
                                         <thead>
                                             <tr class="text-center">
                                                 <th>No</th>
-                                                <th>Nama Form</th>
-                                                <th>Action</th>
+                                                <th>Nama Peserta</th>
+                                                <th>Percobaan Ke</th>
+                                                <th>Nilai</th>
+                                                <th>Benar</th>
+                                                <th>Salah</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($form as $key => $data) : ?>
-                                                <tr class="text-center">
+                                            <?php foreach($history as $key => $value): ?>
+                                                <tr>
                                                     <td><?= $key+1 ?></td>
-                                                    <td><?= $data->nama_form ?></td>
-                                                    <td>
-                                                        <?php if($data->status == 2 || $data->status == 1) : ?>
-                                                            <a href="" class="disabled btn btn-warning">Sudah Mengerjakan Pretest</a>
-                                                        <?php elseif($data->akses == 0): ?>
-                                                            <a href="" class="disabled btn btn-warning">Tidak dapat akses</a>
-                                                        <?php elseif($data->status == 0): ?>         
-                                                            <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-success btn-sm">Kerjakan</a>
-                                                        <?php endif; ?>
-                                                    </td>
+                                                    <td><?= $value->nama_user ?></td>
+                                                    <td><?= $value->submit_ke ?></td>
+                                                    <td><?= $value->nilai ?></td>
+                                                    <td><?= $value->benar ?></td>
+                                                    <td><?= $value->salah ?></td>
                                                 </tr>
-                                            <?php endforeach ?>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -97,8 +98,25 @@
     <!-- ./wrapper -->
 
     <?php $this->load->view('layout/script') ?>
-
-
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable-with-export').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    // 'copyHtml5',
+                    'excelHtml5',
+                    // 'csvHtml5',
+                    // 'pdfHtml5'
+                ],
+                responsive: true
+            } );
+        } );
+    </script>
 </body>
 
 </html>

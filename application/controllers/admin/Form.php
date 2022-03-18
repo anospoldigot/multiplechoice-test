@@ -245,24 +245,24 @@ class Form extends CI_Controller
 
     public function store () 
     {
-        if($this->input->post('type') > 0){
-            $form['is_pretest'] = 1;
+        // if($this->input->post('type') > 0){
+        //     $form['is_pretest'] = 1;
 
-            $where = [
-                'akses.id_perusahaan' => $this->input->post('id_perusahaan'),
-                'form.is_pretest' => 1
-            ];
+        //     $where = [
+        //         'akses.id_perusahaan' => $this->input->post('id_perusahaan'),
+        //         'form.is_pretest' => 1
+        //     ];
 
-            $join = [
-                ['akses', 'akses.id_form = form.id_form']
-            ];
+        //     $join = [
+        //         ['akses', 'akses.id_form = form.id_form']
+        //     ];
 
-            $count = $this->form->get_join_where('*', $join, $where)->row();
+        //     $count = $this->form->get_join_where('*', $join, $where)->row();
 
-            if(count($count) > 0){
-                $this->form->delete(['id_form' => $count->id_form]);
-            }
-        }
+        //     if(count($count) > 0){
+        //         $this->form->delete(['id_form' => $count->id_form]);
+        //     }
+        // }
 
         $this->load->model('Akses_model', 'akses');
         
@@ -286,7 +286,11 @@ class Form extends CI_Controller
                 
         }
         $form['isi']  = json_encode($form['isi']);
+
         $id_form = $this->form->insert_id($form);
+
+        $form['is_pretest'] = 1;
+        $id_form2 = $this->form->insert_id($form);
 
         $user = $this->user->get_where(['id_perusahaan' => $this->input->post('id_perusahaan')])->result();
         $users = [];
@@ -298,18 +302,65 @@ class Form extends CI_Controller
                 'akses' => 0,
                 'status' => 0
             ];
+            $users[] = [
+                'id_perusahaan' => $this->input->post('id_perusahaan'),
+                'id_form' => $id_form2,
+                'id_user' => $value->id_user,
+                'akses' => 0,
+                'status' => 0
+            ];
         }
         
         $this->akses->insert_batch($users);        
 
-        redirect('admin/form');
+        redirect('admin/test');
     }
 
-    public function change_akses ($id_form)
-    {   
+    // public function change_akses ($id_form)
+    // {   
+    //     $this->load->model('Akses_model', 'akses');
+        
+    //     if($this->input->get('key') == 1){
+
+    //         $this->akses->update_where(['akses' => 0], $where);
+    //         $this->session->set_flashdata('success', 'Berhasil menutup akses');
+            
+    //     }else{
+    //         $this->akses->update_where(['akses' => 1], $where);
+    //         $this->session->set_flashdata('success', 'Berhasil membuka akses');
+    //     }
+        
+    //     redirect($this->input->get('current_url'));
+    // }
+    
+    public function tutup_akses ($id_form) 
+    {
         $this->load->model('Akses_model', 'akses');
         $where = [
             'id_form' => $id_form
+        ];
+        $this->akses->update_where(['akses' => 0], $where);
+        $this->session->set_flashdata('success', 'Berhasil menutup akses');
+        redirect($this->input->get('current_url'));
+    }
+    
+    public function buka_akses ($id_form) 
+    {
+        $this->load->model('Akses_model', 'akses');
+        $where = [
+            'id_form' => $id_form
+        ];
+
+        $this->akses->update_where(['akses' => 1], $where);
+        $this->session->set_flashdata('success', 'Berhasil menutup akses');
+        redirect($this->input->get('current_url'));
+    }
+
+    public function change_user_akses ($id_akses)
+    {
+        $this->load->model('Akses_model', 'akses');
+        $where = [
+            'id_akses' => $id_akses
         ];
 
         if($this->input->get('key') == 1){
@@ -324,6 +375,35 @@ class Form extends CI_Controller
 
             redirect($this->input->get('current_url'));
     }
+
+    public function user_akses ($id_form)
+    {
+        $data['users'] = $this->db
+            ->select('*')
+            ->from('user')
+            ->join('akses', 'akses.id_user = user.id_user')
+            ->where([
+                'akses.id_form' => $id_form,
+                'user.id_perusahaan' => $this->input->get('key')
+            ])
+            ->get()
+            ->result();
+
+                
+        $this->load->view('akses/user', $data);
+    }
+
+
+    public function delete_test ($id_form)
+    {
+        $this->form->delete(['id_form' => $id_form]);
+
+        $this->session->set_flashdata('success', 'Berhasil menghapus test');
+        
+        redirect('admin/test');
+    }
+
+    // public function dele
 
 
 }

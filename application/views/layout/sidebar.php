@@ -27,21 +27,21 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('admin/perusahaan') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'perusahaan') : ?> active <?php endif ?>">
+                        <a href="<?= site_url('admin/perusahaan') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'perusahaan' || $this->uri->segment(3) == 'user_akses') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-building"></i>
                             <p>
                                 List Perusahaan
                             </p>
                         </a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a href="<?= site_url('admin/form') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'form' && $this->uri->segment(3) == '') : ?> active <?php endif ?>">
+                    <li class="nav-item">
+                        <a href="<?= site_url('admin/test') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'test' && $this->uri->segment(3) == '') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 List Test
                             </p>
                         </a>
-                    </li> -->
+                    </li>
                     <li class="nav-item">
                         <a href="<?= site_url('admin/form/create') ?>" class="nav-link <?php if ($this->uri->segment(3) == 'create' && $this->uri->segment(2) == 'form') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>
@@ -65,16 +65,16 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- <li class="nav-item">
-                        <a href="<?= site_url('dashboard/list_form') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'list_form') : ?> active <?php endif ?>">
+                    <li class="nav-item">
+                        <a href="<?= site_url('test/dashboard') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'dashboard') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
-                                List Form
+                                Dashboard
                             </p>
                         </a>
-                    </li> -->
+                    </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/test/pretest') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'pre') : ?> active <?php endif ?>">
+                        <a href="<?= site_url('/test/pretest') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'pretest') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 Pre Test
@@ -82,7 +82,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/test') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'post') : ?> active <?php endif ?>">
+                        <a href="<?= site_url('/test') ?>" class="nav-link <?php if ($this->uri->segment(2) == '' && $this->uri->segment(1) == 'test') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 Post Test

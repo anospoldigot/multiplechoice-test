@@ -145,16 +145,90 @@
 
     <?php $this->load->view('layout/script') ?>
     <script>
-        // const tambahsoal = function (){
-        //     $('#soal-wrapper').append(`<div class="form-group">
-        //                         <label for="pertanyaan${ $('#soal-wrapper .form-group').length + 1}" class="form-label">Soal ${ $('#soal-wrapper .form-group').length + 1}</label>
-        //                         <textarea class="form-control" name="pertanyaan${ $('#soal-wrapper .form-group').length + 1}" id="pertanyaan${ $('#soal-wrapper .form-group').length + 1}" cols="30" rows="3" required></textarea>
-        //                     </div>`);
-        // }
-        
-        // const hapussoal = function () {
-        //     $('#soal-wrapper .form-group')[$('#soal-wrapper .form-group').length - 1].remove()
-        // }
+        Swal.fire({
+            title: 'Masukkan jumlah Soal yang dibutuhkan',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            confirmButtonText: 'Submit',
+            // showLoaderOnConfirm: true,
+            allowOutsideClick: false
+            }).then((result) => {
+                console.log(result);
+                const number = parseInt(result.value);
+                let html = '';
+                if (Number.isInteger(number)) {
+                    $('#soal-wrapper').html(loopComponent(number));
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hanya Boleh mesukkan angka',
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload()
+                        }
+                    })
+
+                }
+        })
+
+        const loopComponent = function (num){
+            let html = '';
+            for (let i = 1; i <= num; i++) {
+                html += `<div class="soal mb-5">
+                            <div class="form-group">
+                                <label for="pertanyaan${i}">Pertanyaan ${i}</label>
+                                <input type="text" name="pertanyaan${i}" id="pertanyaan${i}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="pilihan${i}">Pilihan Pertanyaan ${i}</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon${i}">A</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="a[]" placeholder="Pilihan A">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon${i}">B</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="b[]" placeholder="Pilihan B">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon${i}">C</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="c[]" placeholder="Pilihan C">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon${i}">D</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="d[]" placeholder="Pilihan D">
+                                </div>
+                                <div class="form-group">
+                                    <label for="jawaban${i}">Jawaban</label>
+                                    <select name="jawaban${i}" id="jawaban${i}" class="form-control">
+                                         <option value="a">A</option>               
+                                         <option value="b">B</option>               
+                                         <option value="c">C</option>               
+                                         <option value="d">D</option>               
+                                    </select>
+                                </div>
+                            </div>
+                        </div>`;
+                
+            }
+
+            return html;
+        }
+
+        const hapussoal = function () {
+            $('#soal-wrapper .soal')[$('#soal-wrapper .soal').length - 1].remove()
+        }
         const tambahsoal = function () {
             $('#soal-wrapper').append(`<div class="soal mb-5">
                             <div class="form-group">
