@@ -289,8 +289,8 @@ class Form extends CI_Controller
 
         $id_form = $this->form->insert_id($form);
 
-        $form['is_pretest'] = 1;
-        $id_form2 = $this->form->insert_id($form);
+        // $form['is_pretest'] = 1;
+        // $id_form2 = $this->form->insert_id($form);
 
         $user = $this->user->get_where(['id_perusahaan' => $this->input->post('id_perusahaan')])->result();
         $users = [];
@@ -302,13 +302,13 @@ class Form extends CI_Controller
                 'akses' => 0,
                 'status' => 0
             ];
-            $users[] = [
-                'id_perusahaan' => $this->input->post('id_perusahaan'),
-                'id_form' => $id_form2,
-                'id_user' => $value->id_user,
-                'akses' => 0,
-                'status' => 0
-            ];
+            // $users[] = [
+            //     'id_perusahaan' => $this->input->post('id_perusahaan'),
+            //     'id_form' => $id_form2,
+            //     'id_user' => $value->id_user,
+            //     'akses' => 0,
+            //     'status' => 0
+            // ];
         }
         
         $this->akses->insert_batch($users);        

@@ -91,6 +91,9 @@ class Test extends CI_Controller {
 
         $data['total_submit'] = $this->isi_form->get_where($where)->num_rows();
 
+        $data['soal'] = $this->form->get_where(['id_form' => $id_form])->row();
+        // var_dump($data);
+
         $this->load->view('test/show', $data);
     }
 
