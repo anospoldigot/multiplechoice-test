@@ -67,22 +67,22 @@ class Test extends CI_Controller {
 
     public function show ($id_form) 
     {   
-        $where = [
-            'id_form' => $id_form+1,
-            'id_user' => $this->session->userdata('id')
-        ];
+        // $where = [
+        //     'id_form' => $id_form+1,
+        //     'id_user' => $this->session->userdata('id')
+        // ];
 
-        $cek_data = $this->isi_form->get_where($where)->num_rows();
+        // $cek_data = $this->isi_form->get_where($where)->num_rows();
 
         
-        $data['soal'] = $this->form->get_where(['id_form' => $id_form])->row();
+        // $data['soal'] = $this->form->get_where(['id_form' => $id_form])->row();
 
-        if($cek_data == 0 && $data['soal']->is_pretest == 0){
-            echo '<script>
-                alert("Kerjakan pretest dahulu");
-                window.location.href = "' . site_url('test/pretest') . '"
-            </script>';
-        }
+        // if($cek_data == 0 && $data['soal']->is_pretest == 0){
+        //     echo '<script>
+        //         alert("Kerjakan pretest dahulu");
+        //         window.location.href = "' . site_url('test/pretest') . '"
+        //     </script>';
+        // }
 
         $where = [
             'id_form' => $id_form,
