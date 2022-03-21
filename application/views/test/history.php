@@ -39,50 +39,29 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">List Form</h3>
+                                    <h3 class="card-title">History Test : <?= $this->input->get('key') ?></h3>
                                 </div>
 
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
-                                            <tr class="text-center">
+                                            <tr>
                                                 <th>No</th>
-                                                <th>Nama Form</th>
-                                                <th>Submit</th>
-                                                <th>Action</th>
-                                                <th>Status</th>
+                                                <th>Nama users</th>
+                                                <th>Submit Ke</th>
+                                                <th>Nilai</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($form as $key => $data) : ?>
-                                                <tr class="text-center">
+                                            <?php foreach($history as $key => $value) : ?>
+                                                <tr>
                                                     <td><?= $key+1 ?></td>
-                                                    <td><?= $data->nama_form ?></td>
-                                                    <td><?= $data->total_submit ?>/2</td>
-                                                    <td>
-                                                        <?php if($data->akses == 0) : ?>
-                                                            <a href="" class="disabled btn btn-warning">Tidak dapat akses</a>
-                                                        <?php elseif($data->status == 0): ?>
-                                                            <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-danger btn-sm">Kerjakan</a>          
-                                                        <?php elseif($data->status == 2): ?>         
-                                                            <a href="<?= site_url('test/show/' . $data->id_form) ?>" class="btn btn-success btn-sm disabled">Lulus</a>
-                                                        <?php else: ?>
-                                                            <a href="<?= site_url('test/show/' . $data->id_form . '?' . 'repeat=true') ?>" class="btn btn-danger btn-sm">Kerjakan Lagi</a>
-                                                        <?php endif; ?>
-                                                        <a href="<?= site_url('test/history/' . $data->id_form . '?key=' . $data->nama_form) ?>" class="btn btn-sm btn-info">History</a>
-                                                    </td>
-                                                    <td>
-                                                        <?php if($data->status == 0): ?>
-                                                            <span class="text-danger">Belum Mulai</span>
-                                                        <?php elseif($data->status == 1): ?>
-                                                            <span class="text-warning">Belum Lulus</span>
-                                                        <?php else: ?>
-                                                            <span class="text-success">Lulus</span>
-                                                        <?php endif; ?>
-                                                    </td>
+                                                    <td><?= $value->nama_user ?></td>
+                                                    <td><?= $value->submit_ke ?></td>
+                                                    <td><?= $value->nilai ?></td>
                                                 </tr>
-                                            <?php endforeach ?>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>

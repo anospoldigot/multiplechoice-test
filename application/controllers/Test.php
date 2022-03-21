@@ -22,22 +22,22 @@ class Test extends CI_Controller {
 
 
     public function index (){
-        $where = [
-            'id_user' => $this->session->userdata('id'),
-            'form.is_pretest' => 1
-        ];
+        // $where = [
+        //     'id_user' => $this->session->userdata('id'),
+        //     'form.is_pretest' => 1
+        // ];
 
-        $join = [
-            ['form', 'form.id_form = isi_form.id_form']
-        ];
+        // $join = [
+        //     ['form', 'form.id_form = isi_form.id_form']
+        // ];
 
-        $check_test = $this->isi_form->get_join_where('*', $join ,$where)->result();
-        if(empty($check_test)){
-            echo '<script>
-                alert("Selesaikan pretest dahulu");
-                window.location.href="' . site_url('test/pretest') .'"
-            </script>';
-        }
+        // $check_test = $this->isi_form->get_join_where('*', $join ,$where)->result();
+        // if(empty($check_test)){
+        //     echo '<script>
+        //         alert("Selesaikan pretest dahulu");
+        //         window.location.href="' . site_url('test/pretest') .'"
+        //     </script>';
+        // }
 
         $where = ['id_user' => $this->session->userdata('id')];
 
@@ -55,7 +55,7 @@ class Test extends CI_Controller {
             'akses.id_user' => $this->session->userdata('id')
         ];
 
-        $select = 'form.id_form, isi_form.nilai, form.nama_form, akses.status, akses.akses';
+        $select = 'form.id_form, isi_form.nilai, form.nama_form, akses.status, akses.akses, total_submit';
         $data['form'] = $this->form->get_test($select, $join, $where, 'form.id_form')->result();
 
 
@@ -151,7 +151,14 @@ class Test extends CI_Controller {
         if($cek_data == 2){
 
             $update = [
-                'akses' => 0
+                'akses' => 0,
+                'total_submit' => $this->input->post('total_submit') + 1
+            ];
+
+            $this->akses->update_where($update,$where);
+        }else{
+            $update = [
+                'total_submit' => $this->input->post('total_submit') + 1
             ];
 
             $this->akses->update_where($update,$where);
@@ -202,7 +209,22 @@ class Test extends CI_Controller {
         $data['form'] = $this->form->get_test($select, $join, $where, 'form.id_form')->result();
 
         $this->load->view('test/pretest', $data);
+    }
 
+    public function history ($id_form)
+    {
+        $data['history'] = $this->db
+            ->select('*')
+            ->from('user')
+            ->join('akses', 'akses.id_user = user.id_user', 'left')
+            ->join('isi_form', 'isi_form.id_user = user.id_user', 'left')
+            ->where([
+                'akses.id_form' => $id_form,
+                'akses.id_user' => $this->session->userdata('id'),
+            ])
+            ->get()
+            ->result();
+        $this->load->view('test/history', $data);
     }
 
 }

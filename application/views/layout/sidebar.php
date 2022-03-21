@@ -73,14 +73,14 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="<?= site_url('/test/pretest') ?>" class="nav-link <?php if ($this->uri->segment(2) == 'pretest') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
                                 Pre Test
                             </p>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a href="<?= site_url('/test') ?>" class="nav-link <?php if ($this->uri->segment(2) == '' && $this->uri->segment(1) == 'test') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>

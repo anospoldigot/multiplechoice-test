@@ -6,7 +6,7 @@
             <a class="nav-link d-lg-none" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item">
-            <button class="nav-link d-lg-none" onclick="history.back()">Go Back</button>
+            <a class="nav-link" onclick="history.back()"><i class="fas fa-chevron-circle-left"></i></a>
         </li>
     </ul>
     <ul class="navbar-nav ml-auto">
