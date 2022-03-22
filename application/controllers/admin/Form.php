@@ -238,12 +238,13 @@ class Form extends CI_Controller
         redirect('form/' . $nama_form . '/' . 'show' . '/' . $data->id_isi);
     }
 
-    public function create () {
+    public function create()
+    {
         $data['perusahaan'] = $this->perusahaan->get_all()->result();
         $this->load->view('admin/form/create', $data);
     }
 
-    public function store () 
+    public function store()
     {
         // if($this->input->post('type') > 0){
         //     $form['is_pretest'] = 1;
@@ -265,25 +266,24 @@ class Form extends CI_Controller
         // }
 
         $this->load->model('Akses_model', 'akses');
-        
-        $form ['nama_form'] = $this->input->post('nama_form');
+
+        $form['nama_form'] = $this->input->post('nama_form');
         $form['created_at'] = date('Y-m-d h:i:s');
 
         $form['isi']  = [];
-        foreach($this->input->post('a') as $key => $value){
+        foreach ($this->input->post('a') as $key => $value) {
             $push = [
-                    'pertanyaan' => $this->input->post('pertanyaan' . ($key+1)),
-                    'pilihan' => [
-                        'a' => $this->input->post('a')[$key],
-                        'b' => $this->input->post('b')[$key],
-                        'c' => $this->input->post('c')[$key],
-                        'd' => $this->input->post('d')[$key]
-                    ],
-                    'jawaban' => $this->input->post('jawaban' . ($key+1))
-                ];
+                'pertanyaan' => $this->input->post('pertanyaan' . ($key + 1)),
+                'pilihan' => [
+                    'a' => $this->input->post('a')[$key],
+                    'b' => $this->input->post('b')[$key],
+                    'c' => $this->input->post('c')[$key],
+                    'd' => $this->input->post('d')[$key]
+                ],
+                'jawaban' => $this->input->post('jawaban' . ($key + 1))
+            ];
 
             array_push($form['isi'], $push);
-                
         }
         $form['isi']  = json_encode($form['isi']);
 
@@ -294,7 +294,7 @@ class Form extends CI_Controller
 
         $user = $this->user->get_where(['id_perusahaan' => $this->input->post('id_perusahaan')])->result();
         $users = [];
-        foreach ($user as $value){
+        foreach ($user as $value) {
             $users[] = [
                 'id_perusahaan' => $this->input->post('id_perusahaan'),
                 'id_form' => $id_form,
@@ -310,8 +310,9 @@ class Form extends CI_Controller
             //     'status' => 0
             // ];
         }
-        
-        $this->akses->insert_batch($users);        
+        if (count($user) > 0) {
+            $this->akses->insert_batch($users);
+        }
 
         redirect('admin/test');
     }
@@ -319,21 +320,21 @@ class Form extends CI_Controller
     // public function change_akses ($id_form)
     // {   
     //     $this->load->model('Akses_model', 'akses');
-        
+
     //     if($this->input->get('key') == 1){
 
     //         $this->akses->update_where(['akses' => 0], $where);
     //         $this->session->set_flashdata('success', 'Berhasil menutup akses');
-            
+
     //     }else{
     //         $this->akses->update_where(['akses' => 1], $where);
     //         $this->session->set_flashdata('success', 'Berhasil membuka akses');
     //     }
-        
+
     //     redirect($this->input->get('current_url'));
     // }
-    
-    public function tutup_akses ($id_form) 
+
+    public function tutup_akses($id_form)
     {
         $this->load->model('Akses_model', 'akses');
         $where = [
@@ -343,8 +344,8 @@ class Form extends CI_Controller
         $this->session->set_flashdata('success', 'Berhasil menutup akses');
         redirect($this->input->get('current_url'));
     }
-    
-    public function buka_akses ($id_form) 
+
+    public function buka_akses($id_form)
     {
         $this->load->model('Akses_model', 'akses');
         $where = [
@@ -356,27 +357,26 @@ class Form extends CI_Controller
         redirect($this->input->get('current_url'));
     }
 
-    public function change_user_akses ($id_akses)
+    public function change_user_akses($id_akses)
     {
         $this->load->model('Akses_model', 'akses');
         $where = [
             'id_akses' => $id_akses
         ];
 
-        if($this->input->get('key') == 1){
+        if ($this->input->get('key') == 1) {
 
             $this->akses->update_where(['akses' => 0], $where);
             $this->session->set_flashdata('success', 'Berhasil menutup akses');
-            
-        }else{
+        } else {
             $this->akses->update_where(['akses' => 1], $where);
             $this->session->set_flashdata('success', 'Berhasil membuka akses');
         }
 
-            redirect($this->input->get('current_url'));
+        redirect($this->input->get('current_url'));
     }
 
-    public function user_akses ($id_form)
+    public function user_akses($id_form)
     {
         $data['users'] = $this->db
             ->select('*')
@@ -389,17 +389,17 @@ class Form extends CI_Controller
             ->get()
             ->result();
 
-                
+
         $this->load->view('akses/user', $data);
     }
 
 
-    public function delete_test ($id_form)
+    public function delete_test($id_form)
     {
         $this->form->delete(['id_form' => $id_form]);
 
         $this->session->set_flashdata('success', 'Berhasil menghapus test');
-        
+
         redirect('admin/test');
     }
 
