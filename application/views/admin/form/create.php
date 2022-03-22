@@ -181,7 +181,7 @@
                 html += `<div class="soal mb-5">
                             <div class="form-group">
                                 <label for="pertanyaan${i}">Pertanyaan ${i}</label>
-                                <input type="text" name="pertanyaan${i}" id="pertanyaan${i}" class="form-control">
+                                <input type="text" name="pertanyaan${i}" id="pertanyaan${i}" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="pilihan${i}">Pilihan Pertanyaan ${i}</label>
@@ -189,29 +189,29 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon${i}">A</span>
                                     </div>
-                                    <input type="text" class="form-control" name="a[]" placeholder="Pilihan A">
+                                    <input type="text" class="form-control" name="a[]" placeholder="Pilihan A" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon${i}">B</span>
                                     </div>
-                                    <input type="text" class="form-control" name="b[]" placeholder="Pilihan B">
+                                    <input type="text" class="form-control" name="b[]" placeholder="Pilihan B" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon${i}">C</span>
                                     </div>
-                                    <input type="text" class="form-control" name="c[]" placeholder="Pilihan C">
+                                    <input type="text" class="form-control" name="c[]" placeholder="Pilihan C" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon${i}">D</span>
                                     </div>
-                                    <input type="text" class="form-control" name="d[]" placeholder="Pilihan D">
+                                    <input type="text" class="form-control" name="d[]" placeholder="Pilihan D" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="jawaban${i}">Jawaban</label>
-                                    <select name="jawaban${i}" id="jawaban${i}" class="form-control">
+                                    <select name="jawaban${i}" id="jawaban${i}" class="form-control" required>
                                          <option value="a">A</option>               
                                          <option value="b">B</option>               
                                          <option value="c">C</option>               
@@ -233,7 +233,7 @@
             $('#soal-wrapper').append(`<div class="soal mb-5">
                             <div class="form-group">
                                 <label for="pertanyaan${ $('#soal-wrapper .soal').length + 1 }">Pertanyaan ${ $('#soal-wrapper .soal').length + 1 }</label>
-                                <input type="text" name="pertanyaan${ $('#soal-wrapper .soal').length + 1 }" id="pertanyaan${ $('#soal-wrapper .soal').length + 1 }" class="form-control">
+                                <input type="text" name="pertanyaan${ $('#soal-wrapper .soal').length + 1 }" id="pertanyaan${ $('#soal-wrapper .soal').length + 1 }" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="pilihan${ $('#soal-wrapper .soal').length + 1 }">Pilihan Pertanyaan ${ $('#soal-wrapper .soal').length + 1 }</label>
@@ -241,29 +241,29 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon${ $('#soal-wrapper .soal').length + 1 }">A</span>
                                     </div>
-                                    <input type="text" class="form-control" name="a[]" placeholder="Pilihan A">
+                                    <input type="text" class="form-control" name="a[]" placeholder="Pilihan A" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon${ $('#soal-wrapper .soal').length + 1 }">B</span>
                                     </div>
-                                    <input type="text" class="form-control" name="b[]" placeholder="Pilihan B">
+                                    <input type="text" class="form-control" name="b[]" placeholder="Pilihan B" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon${ $('#soal-wrapper .soal').length + 1 }">C</span>
                                     </div>
-                                    <input type="text" class="form-control" name="c[]" placeholder="Pilihan C">
+                                    <input type="text" class="form-control" name="c[]" placeholder="Pilihan C" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon${ $('#soal-wrapper .soal').length + 1 }">D</span>
                                     </div>
-                                    <input type="text" class="form-control" name="d[]" placeholder="Pilihan D">
+                                    <input type="text" class="form-control" name="d[]" placeholder="Pilihan D" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="jawaban${ $('#soal-wrapper .soal').length + 1 }">Jawaban</label>
-                                    <select name="jawaban${ $('#soal-wrapper .soal').length + 1 }" id="jawaban${ $('#soal-wrapper .soal').length + 1 }" class="form-control">
+                                    <select name="jawaban${ $('#soal-wrapper .soal').length + 1 }" id="jawaban${ $('#soal-wrapper .soal').length + 1 }" class="form-control" required>
                                          <option value="a">A</option>               
                                          <option value="b">B</option>               
                                          <option value="c">C</option>               
