@@ -37,6 +37,9 @@
                     <div class="row">
                         <!-- left column -->
                         <div class="col-12">
+                            <?php if($this->session->flashdata('success')) : ?>
+                                <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
+                            <?php endif; ?>
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">List Test</h3>
@@ -62,7 +65,7 @@
                                                         <?= $test->is_pretest > 0 ? '<span class="badge badge-danger">Pre test</span>' : '<span class="badge badge-success">Post Test</span>' ?>
                                                     </td>
                                                     <td>
-                                                        <a href="" class="btn btn-danger btn-sm" title="Hapus Test">
+                                                        <a href="<?= site_url('/admin/test/destroy/' . $test->id_form) ?>" class="btn btn-danger btn-sm" title="Hapus Test">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>

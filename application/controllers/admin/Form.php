@@ -204,7 +204,7 @@ class Form extends CI_Controller
 
     /**
      * menghapus data perusahaan
-     *
+     *  
      * @param [type] $id_perusahaan
      *
      * @return void

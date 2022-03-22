@@ -15,6 +15,16 @@ class test extends CI_Controller {
 
         $this->load->view('admin/test/index', $data);
     }
+
+    public function destroy ($id_form)
+    {
+
+        $this->form->delete(['id_form' => $id_form]);
+
+        $this->session->set_flashdata('success', 'Berhasil menghapus test');
+        
+        redirect('admin/test');
+    }
 }
 
 
