@@ -7,13 +7,15 @@ class test extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Form_model', 'form');
+        $this->load->model('User_model', 'user');
         $this->load->model('Akses_model', 'akses');
+        $this->load->model('Perusahaan_model', 'perusahaan');
     }
     
     public function index ()
     {
         $data['tests'] = $this->form->get_all()->result();
-
+        $data['perusahaan'] = $this->perusahaan->get_all()->result();
         $this->load->view('admin/test/index', $data);
     }
 
@@ -29,24 +31,52 @@ class test extends CI_Controller {
 
     public function set_akses () 
     {
-        $id_perusahaan = $this->input->get('id_perusahaan');
+        $id_perusahaan = $this->input->post('id_perusahaan');
 
-        // $this->db
-        //     ->where_in('id_perusahaan', $id_perusahaan)
-        //     ->delete('akses');
+        $where = [
+            'id_perusahaan' => $id_perusahaan,
+            'id_form' => $this->input->post('id_form')
+        ];
+
+        $akses = $this->akses->delete($where);
         
+        $users = $this->user->get_where(['id_perusahaan' => $id_perusahaan])->result();
+
         $data= [];
 
-            foreach ($id_perusahaan as $key => $value) {
+            foreach ($users as $key => $value) {
                 $data[] = [
-                    'id_perusahaan' => $value
+                    'id_perusahaan' => $id_perusahaan,
+                    'id_form' => $this->input->post('id_form'),
+                    'id_user' => $value->id_user,
+                    'akses' => 0,
+                    'status' => 0,
+                    'total_submit' => 0
                 ];
 
             }
 
-        var_dump($data);
-        // $this->db->insert_batch()
+        $this->akses->insert_batch($data);
+
+        $this->session->set_flashdata('success', 'Berhasil memberi akses ke perusahaan');
+        redirect('admin/test');
             
+    }
+
+    public function tarik_akses ()
+    {
+        $id_perusahaan = $this->input->post('id_perusahaan');
+
+        $where = [
+            'id_perusahaan' => $id_perusahaan,
+            'id_form' => $this->input->post('id_form')
+        ];
+
+        $akses = $this->akses->delete($where);
+        
+        $this->session->set_flashdata('success', 'Berhasil menarik akses ke perusahaan');
+        
+        redirect('admin/test');
     }
 }
 

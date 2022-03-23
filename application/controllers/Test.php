@@ -60,9 +60,6 @@ class Test extends CI_Controller {
         
         $data['form'] = $this->form->get_test($select, $join, $where, 'form.id_form')->result();
 
-        var_dump($data);
-
-
         $this->load->view('test/index', $data);
 
     }
