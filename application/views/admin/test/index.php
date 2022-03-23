@@ -71,16 +71,44 @@
                                                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal<?=$key?>">
                                                             Beri test ke perusahaan
                                                         </button>
+                                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#pullTest<?=$key?>">
+                                                            Tarik test dari perusahaan
+                                                        </button>
                                                         <div class="modal fade" id="exampleModal<?= $key ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Set Akses</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Tarik Akses</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <form action="<?= site_url('admin/test/set_akses') ?>" method="post">
+                                                                        <div class="modal-body">
+                                                                            <input type="hidden" name="id_form" value="<?= $test->id_form ?>">
+                                                                            <select name="id_perusahaan" id="id_perusahaan" class="form-control">
+                                                                                <?php foreach($perusahaan as $value) : ?>
+                                                                                    <option value="<?= $value->id_perusahaan ?>"><?= $value->nama_perusahaan ?></option>
+                                                                                <?php endforeach; ?>   
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit" class="btn btn-primary">Set</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal fade" id="pullTest<?=$key?>" tabindex="-1" aria-labelledby="pullTestLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="pullTestLabel">Tarik Akses</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <form action="<?= site_url('admin/test/tarik_akses') ?>" method="post">
                                                                         <div class="modal-body">
                                                                             <input type="hidden" name="id_form" value="<?= $test->id_form ?>">
                                                                             <select name="id_perusahaan" id="id_perusahaan" class="form-control">
@@ -90,7 +118,7 @@
                                                                             </select>
                                                                         </div>
                                                                         <div class="modal-footer">
-                                                                            <button type="submit" class="btn btn-primary">Set</button>
+                                                                            <button type="submit" class="btn btn-primary">Tarik</button>
                                                                         </div>
                                                                     </form>
                                                                 </div>

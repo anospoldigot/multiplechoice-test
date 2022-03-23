@@ -58,8 +58,25 @@ class test extends CI_Controller {
 
         $this->akses->insert_batch($data);
 
+        $this->session->set_flashdata('success', 'Berhasil memberi akses ke perusahaan');
         redirect('admin/test');
             
+    }
+
+    public function tarik_akses ()
+    {
+        $id_perusahaan = $this->input->post('id_perusahaan');
+
+        $where = [
+            'id_perusahaan' => $id_perusahaan,
+            'id_form' => $this->input->post('id_form')
+        ];
+
+        $akses = $this->akses->delete($where);
+        
+        $this->session->set_flashdata('success', 'Berhasil menarik akses ke perusahaan');
+        
+        redirect('admin/test');
     }
 }
 
