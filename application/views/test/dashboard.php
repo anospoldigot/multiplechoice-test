@@ -40,7 +40,7 @@
                             <div class="alert">
                                 <h1>Selamat Datang <?= $this->session->userdata('name') ?></h1>
                                 <p>
-                                    Silahkan mengerjakan pre test sebelum mengerjakan post test
+                                    Selamat mengerjakan
                                 </p>
                             </div>
                             <!-- /.card -->

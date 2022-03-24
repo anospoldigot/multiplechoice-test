@@ -49,16 +49,21 @@
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <form action="<?= site_url('auth') ?>" method="post">
 
+                        <small>
+                            <div class="alert alert-success">
+                                Silahkan gunakan huruf kecil untuk username maupun password
+                            </div>
+                        </small>
+                        
+                        <div class="divider my-4">
+                            <h1 class="text-center">Login</h1>
+                        </div>
                         <?php if ($this->session->flashdata('error')) : ?>
                             <div class="alert alert-warning" role="alert">
                                 <?= $this->session->flashdata('error') ?>
                             </div>
                         <?php endif ?>
-
-                        <div class="divider d-flex align-items-center my-4">
-                            <h1>Login</h1>
-                        </div>
-
+                        
                         <!-- Email input -->
                         <div class="form-outline mb-4">
                             <input type="text" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" name="email" />

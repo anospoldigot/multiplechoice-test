@@ -55,7 +55,7 @@
                                                     <div class="form-group">
                                                         <?php foreach($value->pilihan as $k => $val): ?>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="pilihan<?=$key?>" id="pilihan<?=$k?><?=$key?>" value="<?=$k?>">
+                                                                <input class="form-check-input" type="radio" name="pilihan<?=$key?>" id="pilihan<?=$k?><?=$key?>" value="<?=$k?>" required>
                                                                 <label class="form-check-label" for="pilihan<?=$k?><?=$key?>">
                                                                     <span class="font-weight-bold text-uppercase"><?= $k ?>. </span><?= $val ?>
                                                                 </label>
