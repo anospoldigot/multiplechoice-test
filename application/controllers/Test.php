@@ -150,7 +150,7 @@ class Test extends CI_Controller {
 
         $cek_data = $this->isi_form->get_where($where)->num_rows();
 
-        if($cek_data == 2){
+        if($cek_data == 2 || $cek_data == 4 || $cek_data == 6 || $cek_data == 9){
 
             $update = [
                 'akses' => 0,
