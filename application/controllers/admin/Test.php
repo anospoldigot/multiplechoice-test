@@ -78,6 +78,51 @@ class test extends CI_Controller {
         
         redirect('admin/test');
     }
+
+    public function generateUser()
+    {
+		$file = $_FILES['csv']['tmp_name'];
+
+		// Medapatkan ekstensi file csv yang akan diimport.
+		$ekstensi  = explode('.', $_FILES['csv']['name']);
+
+		// Tampilkan peringatan jika submit tanpa memilih menambahkan file.
+		if (empty($file)) {
+			echo 'File tidak boleh kosong!';
+		} else {
+			// Validasi apakah file yang diupload benar-benar file csv.
+			if (strtolower(end($ekstensi)) === 'csv' && $_FILES["csv"]["size"] > 0) {
+
+				$i = 0;
+				$handle = fopen($file, "r");
+				while (($row = fgetcsv($handle, 2048))) {
+					$i++;
+					if ($i == 1) continue;
+
+					// Data yang akan disimpan ke dalam databse
+					$coachee['nama_user'] = $row[1];
+					$coachee['email_user'] = strtolower($row[2]);
+					$coachee['password_user'] = password_hash(strtolower($row[4]), PASSWORD_DEFAULT);
+					$coachee['username'] =  strtolower($row[3]);
+					$coachee['id_perusahaan'] = $row[5];
+                    $this->db->insert('user', $coachee);
+					// Simpan data ke database.
+					// $this->AdminModel->saveCoachee($coachee);
+				}
+                
+				fclose($handle);
+				$this->session->set_flashdata('coachee', 'Berhasil Menyimpan Data Coachee');
+				// redirect('admin/coachee/list/' . $coachee['company_id'], 'refresh
+                echo "mueheheheh";
+			} else {
+				echo 'Format file tidak valid!';
+			}
+		}
+    }
+
+    public function mueheh(){
+        $this->load->view('mueheh');
+    }
 }
 
 

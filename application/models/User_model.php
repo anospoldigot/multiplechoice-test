@@ -11,7 +11,7 @@ class User_model extends CI_Model
      */
     public function cek_login($email)
     {
-        $hasil = $this->db->where('email_user', $email)->limit(1)->get('user');
+        $hasil = $this->db->where('email_user', $email)->or_where('username', $email)->limit(1)->get('user');
         if ($hasil->num_rows() > 0) {
             return $hasil->row();
         } else {
