@@ -51,6 +51,7 @@
                                                 <th>Nama Peserta</th>
                                                 <th>Email</th>
                                                 <th>Total Submit</th>
+                                                <th>Nilai Terakhir</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                                 <!-- <th>Action</th> -->
@@ -63,6 +64,7 @@
                                                     <td><?= $value->nama_user ?></td>
                                                     <td><?= $value->email_user ?></td>
                                                     <td><?= $value->total_submit  ?></td>
+                                                    <td><?= $value->nilai_terakhir ?? '' ?></td>
                                                     <td>
                                                     <?php if($value->status == 0): ?>
                                                         <span class="badge badge-danger">Belum Mulai</span>

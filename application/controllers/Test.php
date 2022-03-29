@@ -125,6 +125,7 @@ class Test extends CI_Controller {
 
         $isi_form['nilai'] =  ($isi_form['benar'] / ($isi_form['benar']+$isi_form['salah'])) * 100;
 
+        $this->user->update_where(['nilai_terakhir' => $isi_form['nilai']], ['id_user' => $this->session->userdata('id')]);
 
         $where = [
             'id_form' => $this->input->post('id_form'),

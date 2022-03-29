@@ -37,10 +37,20 @@ class test extends CI_Controller {
             'id_perusahaan' => $id_perusahaan,
             'id_form' => $this->input->post('id_form')
         ];
-
-        $akses = $this->akses->delete($where);
         
-        $users = $this->user->get_where(['id_perusahaan' => $id_perusahaan])->result();
+        $usersCompany = $this->akses->get_where($where)->result();
+
+        $existUser = [];
+
+        foreach($usersCompany as $value){
+            array_push($existUser, $value->id_user);
+        }
+
+        $users = $this->db
+            ->where('id_perusahaan', $id_perusahaan)
+            ->where_not_in('id_user', $existUser)
+            ->get('user')
+            ->result();
 
         $data= [];
 
@@ -56,7 +66,9 @@ class test extends CI_Controller {
 
             }
 
-        $this->akses->insert_batch($data);
+        if(count($data) > 0){
+             $this->akses->insert_batch($data);
+        }
 
         $this->session->set_flashdata('success', 'Berhasil memberi akses ke perusahaan');
         redirect('admin/test');
