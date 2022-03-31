@@ -48,8 +48,8 @@ class Auth extends CI_Controller
             // proses login
 
             // mengambil data inputan
-            $email = htmlspecialchars($this->input->post('email'));
-            $pass = htmlspecialchars($this->input->post('password'));
+            $email = strtolower(htmlspecialchars($this->input->post('email')));
+            $pass = strtolower(htmlspecialchars($this->input->post('password')));
 
             // mengecek login
             $cek_login = $this->User_model->cek_login($email);

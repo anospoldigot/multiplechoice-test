@@ -47,14 +47,7 @@
                     <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/draw2.png" class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form action="<?= site_url('auth') ?>" method="post">
-
-                        <small>
-                            <div class="alert alert-success">
-                                Silahkan gunakan huruf kecil untuk username maupun password
-                            </div>
-                        </small>
-                        
+                    <form action="<?= site_url('auth') ?>" method="post">                        
                         <div class="divider my-4">
                             <h1 class="text-center">Login</h1>
                         </div>
