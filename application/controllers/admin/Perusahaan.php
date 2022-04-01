@@ -94,7 +94,7 @@ class Perusahaan extends CI_Controller
 
 
         $data['users'] = $this->db
-            ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, akses.id_form, submit_ke, user.id_user, user.nilai_terakhir')
+            ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, akses.id_form, submit_ke, user.id_user, user.nilai_terakhir, user.batch')
             // ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, isi_form.id_form, submit_ke')
             ->from('user')
             ->join('akses', 'akses.id_user = user.id_user', 'left')

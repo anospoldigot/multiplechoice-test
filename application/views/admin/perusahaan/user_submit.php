@@ -49,9 +49,10 @@
                                             <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Nama Peserta</th>
-                                                <th>Email</th>
+                                                <!-- <th>Email</th> -->
                                                 <th>Total Submit</th>
                                                 <th>Nilai Terakhir</th>
+                                                <th>Batch</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                                 <!-- <th>Action</th> -->
@@ -62,9 +63,10 @@
                                                 <tr>
                                                     <td><?= $key+1 ?></td>
                                                     <td><?= $value->nama_user ?></td>
-                                                    <td><?= $value->email_user ?></td>
+                                                    <!-- <td><?= $value->email_user ?></td> -->
                                                     <td><?= $value->total_submit  ?></td>
                                                     <td><?= $value->nilai_terakhir ?? '' ?></td>
+                                                    <td>Batch<?= $value->batch ?? '' ?></td>
                                                     <td>
                                                     <?php if($value->status == 0): ?>
                                                         <span class="badge badge-danger">Belum Mulai</span>
