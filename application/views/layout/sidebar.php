@@ -85,7 +85,7 @@
                         <a href="<?= site_url('/test') ?>" class="nav-link <?php if ($this->uri->segment(2) == '' && $this->uri->segment(1) == 'test') : ?> active <?php endif ?>">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
-                                Post Test
+                                Test
                             </p>
                         </a>
                     </li>
