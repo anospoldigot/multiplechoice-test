@@ -125,8 +125,7 @@ class Test extends CI_Controller {
 
         $isi_form['nilai'] =  ($isi_form['benar'] / ($isi_form['benar']+$isi_form['salah'])) * 100;
 
-        $this->user->update_where(['nilai_terakhir' => $isi_form['nilai']], ['id_user' => $this->session->userdata('id')]);
-
+        
         $where = [
             'id_form' => $this->input->post('id_form'),
             'id_user' => $this->session->userdata('id')
@@ -142,8 +141,9 @@ class Test extends CI_Controller {
         }else{
             $this->akses->update_where(['status' => 1 ], $where);
         }
-
-
+        
+        $this->user->update_where(['nilai_terakhir' => $isi_form['nilai']], ['id_user' => $this->session->userdata('id')]);
+        
         $isi_form['isi'] =  json_encode($isi_form['isi']);
         $isi_form['submit_ke'] = $this->input->post('total_submit') + 1;
         $this->isi_form->save($isi_form);
@@ -166,6 +166,9 @@ class Test extends CI_Controller {
 
             $this->akses->update_where($update,$where);
         }
+        
+        $this->load->library('pusher');
+        $this->pusher->sendEvent();
 
         $this->session->set_flashdata('success', 'Berhasil menginput form');
 

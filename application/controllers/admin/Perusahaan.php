@@ -81,6 +81,26 @@ class Perusahaan extends CI_Controller
         $this->load->view('admin/perusahaan/show_test', $data);
     }
 
+    public function list_batch ($id_form)
+    {
+        $data['batchs'] = $this->db
+            ->select('*')
+            // ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, isi_form.id_form, submit_ke')
+            ->from('user')
+            ->join('akses', 'akses.id_user = user.id_user', 'left')
+            ->join('isi_form', 'isi_form.id_user = user.id_user', 'left')
+            ->where([
+                'user.id_perusahaan' => $this->input->get('key'),
+                'user.batch !=' => null,
+                'akses.id_form' => $id_form,
+            ])
+            ->group_by('user.batch')
+            ->get()
+            ->result();
+        $data['id_form'] = $id_form;
+        $this->load->view('admin/perusahaan/list_batch', $data);
+    }
+
     public function list_submit ($id_form) 
     {
         // $join = [
@@ -92,8 +112,34 @@ class Perusahaan extends CI_Controller
         // ];
 
 
-
         $data['users'] = $this->db
+            ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, akses.id_form, submit_ke, user.id_user, user.nilai_terakhir, user.batch')
+            // ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, isi_form.id_form, submit_ke')
+            ->from('user')
+            ->join('akses', 'akses.id_user = user.id_user', 'left')
+            ->join('isi_form', 'isi_form.id_user = user.id_user', 'left')
+            ->where([
+                'user.id_perusahaan' => $this->input->get('key'),
+                'user.batch' => $this->input->get('batch'),
+                'akses.id_form' => $id_form,
+            ])
+            ->group_by('user.id_user')
+            ->order_by('status', 'desc')
+            ->get()
+            ->result();
+        $this->load->view('admin/perusahaan/user_submit', $data);
+    }
+
+    public function ajax_list_submit($id_form)
+    {   
+        
+    //     $this->load->library('datatables');
+    //     $this->datatables->add_column('foto', '<img src="http://www.rutlandherald.com/wp-content/uploads/2017/03/default-user.png" width=20>', 'foto');
+    //     $this->datatables->select('nama_lengkap,email,no_hp');
+    //     $this->datatables->add_column('action', anchor('karyawan/edit/.$1','Edit',array('class'=>'btn btn-danger btn-sm')), 'id_pegawai');
+    //     $this->datatables->from('karyawan');
+    //    return print_r($this->datatables->generate());
+        $data = $this->db
             ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, akses.id_form, submit_ke, user.id_user, user.nilai_terakhir, user.batch')
             // ->select('count(if(isi_form.id_form = "' . $id_form. '", isi_form.id_form, NULL)) as total_submit, user.nama_user, user.email_user, akses.status, akses.akses, isi_form.nilai, isi_form.id_form, submit_ke')
             ->from('user')
@@ -106,7 +152,16 @@ class Perusahaan extends CI_Controller
             ->group_by('user.id_user')
             ->get()
             ->result();
-        $this->load->view('admin/perusahaan/user_submit', $data);
+
+        echo json_encode($data);
+    }
+
+    public function pusher ()
+    {
+        // require __DIR__ . '/vendor/autoload.php';
+
+        $this->load->library('pusher');
+        $this->pusher->sendEvent();
     }
 
 

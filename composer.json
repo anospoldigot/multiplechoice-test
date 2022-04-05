@@ -1,6 +1,7 @@
 {
     "require": {
         "dompdf/dompdf": "^1.0",
-        "phpoffice/phpspreadsheet": "^1.22"
+        "phpoffice/phpspreadsheet": "^1.22",
+        "pusher/pusher-php-server": "^7.0"
     }
 }

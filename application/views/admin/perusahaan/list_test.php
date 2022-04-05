@@ -61,7 +61,7 @@
                                                     <td><?= $value->is_pretest == 0 ? '<span class="badge badge-success">Post Test</span>' : '<span class="badge badge-danger">Pre Test</span>' ?></td>
                                                     <td>
                                                         <div class="d-block d-xl-none"></div>
-                                                        <a href="<?= site_url('admin/perusahaan/list_submit/' . $value->id_form  . '?key=' . $this->uri->segment(4)) ?>" class="btn btn-sm btn-success">
+                                                        <a href="<?= site_url('admin/perusahaan/list_batch/' . $value->id_form  . '?key=' . $this->uri->segment(4)) ?>" class="btn btn-sm btn-success">
                                                         <i class="fas fa-file"></i><br>
                                                         Lihat submit user
                                                         </a>
