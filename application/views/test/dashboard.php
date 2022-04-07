@@ -41,11 +41,13 @@
                                 <h1>Selamat Datang <?= $this->session->userdata('name') ?></h1>
                                 <p>
                                     Selamat mengerjakan
+
                                 </p>
+                                <a href="<?= site_url('test/show/' .$test->id_form) ?>" class="btn btn-primary text-decoration-none">Kerjakan Test</a>
                             </div>
+                            
                             <!-- /.card -->
                         </div>
-                        <!-- /.col -->
                         <!--/.col (left) -->
                     </div>
                     <!-- /.row -->

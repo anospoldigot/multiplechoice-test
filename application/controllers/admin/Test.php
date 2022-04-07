@@ -117,6 +117,7 @@ class test extends CI_Controller {
 					$coachee['password_user'] = password_hash(strtolower($row[4]), PASSWORD_DEFAULT);
 					$coachee['username'] =  strtolower($row[3]);
 					$coachee['id_perusahaan'] = 2;
+					$coachee['batch'] = 3;
                     $this->db->insert('user', $coachee);
 					// Simpan data ke database.
 					// $this->AdminModel->saveCoachee($coachee);
