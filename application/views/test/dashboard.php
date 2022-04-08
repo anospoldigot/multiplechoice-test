@@ -43,7 +43,7 @@
                                     Selamat mengerjakan
 
                                 </p>
-                                <a href="<?= site_url('test/show/' .$test->id_form) ?>" class="btn btn-primary text-decoration-none">Kerjakan Test</a>
+                                <a href="<?= site_url('test') ?>" class="btn btn-primary text-decoration-none">Pergi ke Test</a>
                             </div>
                             
                             <!-- /.card -->
