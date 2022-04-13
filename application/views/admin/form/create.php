@@ -69,6 +69,10 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="min_nilai">Nilai Minimum</label>
+                            <input type="number" class="form-control" name="min_nilai" id="min_nilai">
+                        </div>
                         <!-- <div class="form-group">
                             <label for="type">Type</label>
                             <select name="type" id="type" class="form-control">

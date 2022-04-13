@@ -41,16 +41,23 @@ class test extends CI_Controller {
         $usersCompany = $this->akses->get_where($where)->result();
 
         $existUser = [];
-
+        
         foreach($usersCompany as $value){
             array_push($existUser, $value->id_user);
         }
+        if(empty($existUser)){
+            $users = $this->db
+                ->where('id_perusahaan', $id_perusahaan)
+                ->get('user')
+                ->result();  
+        }else{
+            $users = $this->db
+                ->where('id_perusahaan', $id_perusahaan)
+                ->where_not_in('id_user', $existUser)
+                ->get('user')
+                ->result();  
+        }
 
-        $users = $this->db
-            ->where('id_perusahaan', $id_perusahaan)
-            ->where_not_in('id_user', $existUser)
-            ->get('user')
-            ->result();
 
         $data= [];
 
@@ -61,7 +68,8 @@ class test extends CI_Controller {
                     'id_user' => $value->id_user,
                     'akses' => 0,
                     'status' => 0,
-                    'total_submit' => 0
+                    'total_submit' => 0,
+                    'min_nilai' => $this->input->post('min_nilai')
                 ];
 
             }

@@ -110,15 +110,16 @@ class Test extends CI_Controller {
         ];
 
         $data['total_submit'] = $this->isi_form->get_where($where)->num_rows();
-
-        $data['soal'] = $this->form->get_where(['id_form' => $id_form])->row();
-        // var_dump($data);
-
+        $join = [
+            ['akses', 'akses.id_form = form.id_form']
+        ];
+        $data['soal'] = $this->form->get_join_where('*', $join, ['form.id_form' => $id_form])->row();
         $this->load->view('test/show', $data);
     }
 
     public function store ()
     {
+        $min_nilai = $this->input->post('min_nilai');
         $isi_form['benar'] = 0;
         $isi_form['salah'] = 0;
 
@@ -152,12 +153,12 @@ class Test extends CI_Controller {
             'id_user' => $this->session->userdata('id')
         ];
 
-        if($this->input->post('is_remed') == 'true' && $isi_form['nilai'] >= 70){
+        if($this->input->post('is_remed') == 'true' && $isi_form['nilai'] >= $min_nilai){
 
-            $isi_form['nilai'] = 70;
+            $isi_form['nilai'] = $min_nilai;
             $isi_form['is_repeat'] = 1;
             $this->akses->update_where(['status' => 2], $where);
-        }else if($this->input->post('is_remed') == '' && $isi_form['nilai'] >= 70){
+        }else if($this->input->post('is_remed') == '' && $isi_form['nilai'] >= $min_nilai){
             $this->akses->update_where(['status' => 2], $where);
         }else{
             $this->akses->update_where(['status' => 1 ], $where);

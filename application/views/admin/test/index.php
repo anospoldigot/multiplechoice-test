@@ -86,11 +86,17 @@
                                                                     <form action="<?= site_url('admin/test/set_akses') ?>" method="post">
                                                                         <div class="modal-body">
                                                                             <input type="hidden" name="id_form" value="<?= $test->id_form ?>">
-                                                                            <select name="id_perusahaan" id="id_perusahaan" class="form-control">
-                                                                                <?php foreach($perusahaan as $value) : ?>
-                                                                                    <option value="<?= $value->id_perusahaan ?>"><?= $value->nama_perusahaan ?></option>
-                                                                                <?php endforeach; ?>   
-                                                                            </select>
+                                                                            <div class="form-group">
+                                                                                <select name="id_perusahaan" id="id_perusahaan" class="form-control">
+                                                                                    <?php foreach($perusahaan as $value) : ?>
+                                                                                        <option value="<?= $value->id_perusahaan ?>"><?= $value->nama_perusahaan ?></option>
+                                                                                    <?php endforeach; ?>   
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="min_nilai">Nilai Minimum</label>
+                                                                                <input type="number" class="form-control" name="min_nilai" id="min_nilai" min="0" max="100">
+                                                                            </div>
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="submit" class="btn btn-primary">Set</button>

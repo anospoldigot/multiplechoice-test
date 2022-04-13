@@ -300,7 +300,8 @@ class Form extends CI_Controller
                 'id_form' => $id_form,
                 'id_user' => $value->id_user,
                 'akses' => 0,
-                'status' => 0
+                'status' => 0,
+                'min_nilai' => $this->input->post('min_nilai')
             ];
             // $users[] = [
             //     'id_perusahaan' => $this->input->post('id_perusahaan'),

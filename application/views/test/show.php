@@ -45,6 +45,7 @@
                                         <input type="hidden" name="total_submit" value="<?= $total_submit ?>">
                                         <input type="hidden" name="count" value="<?= count(json_decode($soal->isi)) ?>">
                                         <input type="hidden" name="id_form" value="<?=$soal->id_form?>">
+                                        <input type="hidden" name="min_nilai" value="<?=$soal->min_nilai?>">
                                         <input type="hidden" name="is_remed" value="<?= $this->input->get('repeat') ?>">
                                         <ol>
                                             <?php foreach(json_decode($soal->isi) as $key => $value): ?>

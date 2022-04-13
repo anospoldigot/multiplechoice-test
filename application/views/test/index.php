@@ -72,7 +72,7 @@
                                                             <a href="<?= site_url('test/show/' . $data->id_form . '?' . 'repeat=true') ?>" class="btn btn-danger">Kerjakan Lagi</a>
                                                         <?php endif; ?>
                                                         <a href="<?= site_url('test/history/' . $data->id_form . '?key=' . $data->nama_form) ?>" class="btn btn-info">History</a>
-                                                    </td>
+                                                     </td>
                                                     <td>
                                                         <?php if($data->status == 0): ?>
                                                             <span class="text-danger">Belum Mulai</span>
