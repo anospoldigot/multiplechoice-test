@@ -34,6 +34,8 @@ class User extends CI_Controller
         $data['user']      = $this->user->get_join_where_order('*', $join, $where, $order)->result();
         $data['page_title'] = "List User Perusahaan | Program Form";
 
+        $data['batch'] = $this->db->where($where)->group_by('batch')->get('user')->num_rows() ?? 0;
+
         // var_dump($data);
         $this->load->view('admin/user/list', $data);
     }

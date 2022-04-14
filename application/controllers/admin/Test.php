@@ -99,7 +99,7 @@ class test extends CI_Controller {
         redirect('admin/test');
     }
 
-    public function generateUser()
+    public function generate_user_csv()
     {
 		$file = $_FILES['csv']['tmp_name'];
 
@@ -108,7 +108,7 @@ class test extends CI_Controller {
 
 		// Tampilkan peringatan jika submit tanpa memilih menambahkan file.
 		if (empty($file)) {
-			echo 'File tidak boleh kosong!';
+			$this->session->set_flashdata('error', "File tidak boleh kosong");
 		} else {
 			// Validasi apakah file yang diupload benar-benar file csv.
 			if (strtolower(end($ekstensi)) === 'csv' && $_FILES["csv"]["size"] > 0) {
@@ -121,11 +121,11 @@ class test extends CI_Controller {
 
 					// Data yang akan disimpan ke dalam databse
 					$coachee['nama_user'] = $row[1];
-					$coachee['email_user'] = strtolower($row[2]);
-					$coachee['password_user'] = password_hash(strtolower($row[4]), PASSWORD_DEFAULT);
+					$coachee['email_user'] = strtolower(str_replace(' ', '', $row[2]));
+					$coachee['password_user'] = password_hash(strtolower(str_replace(' ', '', $row[4])), PASSWORD_DEFAULT);
 					$coachee['username'] =  strtolower($row[3]);
-					$coachee['id_perusahaan'] = 2;
-					$coachee['batch'] = 3;
+					$coachee['id_perusahaan'] = $this->input->post('id_perusahaan');
+					$coachee['batch'] = $this->input->post('batch');
                     $this->db->insert('user', $coachee);
 					// Simpan data ke database.
 					// $this->AdminModel->saveCoachee($coachee);
@@ -134,11 +134,13 @@ class test extends CI_Controller {
 				fclose($handle);
 				$this->session->set_flashdata('coachee', 'Berhasil Menyimpan Data Coachee');
 				// redirect('admin/coachee/list/' . $coachee['company_id'], 'refresh
-                echo "mueheheheh";
+                $this->session->set_flashdata('success', "Berhasil menambahkan user");
 			} else {
-				echo 'Format file tidak valid!';
+                $this->session->set_flashdata('error', "Gagal menambahkan user");
 			}
+
 		}
+        redirect('admin/user/list/' . $this->input->post('id_perusahaan'));
     }
 
     public function mueheh(){

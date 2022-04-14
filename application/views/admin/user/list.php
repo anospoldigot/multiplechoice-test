@@ -50,6 +50,9 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">List Data User</h3>
+                                    <button type="button" class="btn btn-primary mx-3 float-right" data-toggle="modal" data-target="#csvModal">
+                                        <i class="fas fa-plus"></i> CSV
+                                    </button>
                                     <button type="button" class="btn btn-success float-right" onclick="add_user()">
                                         <i class="fas fa-plus"></i>
                                     </button>
@@ -158,7 +161,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-
+                                            
     <div class="modal fade" id="edit_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
         <div class="modal-dialog role=" document">
             <div class="modal-content">
@@ -194,7 +197,36 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="csvModal" tabindex="-1" aria-labelledby="csvModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="<?= site_url('admin/test/generate_user_csv') ?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah User Dengan CSV file</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id_perusahaan" value="<?= $this->uri->segment(4) ?>">
+                        <div class="form-group">
+                            <label for="batch">Batch Ke</label>
+                            <input type="number" class="form-control" name="batch" id="batch" min="0" value="<?= $batch+1 ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="csv">File CSV</label>
+                            <input type="file" class="form-control-file" name="csv" id="csv">
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         function add_user() {
             save_method = 'add';

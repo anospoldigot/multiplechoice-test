@@ -202,14 +202,14 @@ class Perusahaan extends CI_Controller
             //menambah akses perusahaan
             $id_perusahaan = $this->db->insert_id();
             $form = $this->form->get_all()->result();
-            foreach ($form as $data) {
-                $data = array(
-                    'id_perusahaan' => $id_perusahaan,
-                    'id_form' => $data->id_form,
-                    'akses' => 0,
-                );
-                $this->akses->save($data);
-            }
+            // foreach ($form as $data) {
+            //     $data = array(
+            //         'id_perusahaan' => $id_perusahaan,
+            //         'id_form' => $data->id_form,
+            //         'akses' => 0,
+            //     );
+            //     $this->akses->save($data);
+            // }
             $this->session->set_flashdata('msg', 'Perusahaan berhasil di simpan');
             redirect('admin/perusahaan');
         }
