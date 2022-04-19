@@ -119,7 +119,7 @@ class Test extends CI_Controller {
 
     public function store ()
     {
-        $min_nilai = $this->input->post('min_nilai');
+        $min_nilai = 70;
         $isi_form['benar'] = 0;
         $isi_form['salah'] = 0;
 
