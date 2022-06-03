@@ -55,7 +55,7 @@ class Customer_research extends CI_Controller
         $form_uo['isi'] = json_encode($data); // mengencode data inputan user
         $form_uo['id_form'] = $form->id_form; // id dari tipe form yang akan di masukan
         $form_uo['id_user'] = $this->session->userdata('id');
-
+ 
         $this->isi_form->save($form_uo);
         redirect('/form/customer_research/show/' . $this->db->insert_id());
     }
